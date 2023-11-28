@@ -1,4 +1,4 @@
-import { FetchArgs, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userApi = createApi({
     reducerPath: 'api',
@@ -8,6 +8,9 @@ export const userApi = createApi({
         getAll: build.query({
             query: () => "/users",
         }),
+        getOneById: build.query({
+            query: (id) => `/users/${id}`,
+        }),
     })
 });
-export const { useGetAllQuery } = userApi;
+export const { useGetAllQuery,useGetOneByIdQuery } = userApi;

@@ -1,0 +1,35 @@
+.wrapper {
+    padding-top: 48px;
+    display: flex;
+    max-width: 947px;
+    gap: 129px;
+}
+
+.contactsBar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.contact {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.paragrath {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 21.79px;
+    margin-bottom: 24px;
+}
+.paragrath:last-child {
+    margin-bottom: 0;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+

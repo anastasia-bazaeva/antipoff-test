@@ -37,4 +37,5 @@ body {
   flex-direction: column;
   place-items: center;
   min-height: 100vh;
+  box-sizing: border-box;
 }

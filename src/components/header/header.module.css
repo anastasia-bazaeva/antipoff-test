@@ -4,10 +4,13 @@
     align-items: center;
     background-color: var(--colors-interface-primary);
     color: var(--colors-interface-white);
+    /* Это вопрос спорный, но я ориентируюсь на подход youtube, yandex, 
+    github и многих других, когда хедер всегда занимают всю ширину экрана */
     width: 100%;
     text-align: center;
     padding: 32px 0;
     gap: 16px;
+    position: relative;
 }
 
 .title {
@@ -18,10 +21,64 @@
 }
 
 .text {
-    margin: 0;
+    margin: 0 0 32px;
     font-size: 20px;
     line-height: 23.44px;
     font-weight: 400;
     color: var(--colors-interface-light);
     max-width: 846px;
+}
+
+.linkWrapper {
+    position: absolute;
+    width: calc(100% - 2 * 80px);
+    margin: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.link {
+    font-size: 16px;
+    line-height: 21.79px;
+    padding: 8px 16px;
+    border: 1px solid var(--colors-interface-light);
+    color: var(--colors-interface-light);
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+.link:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.userBar {
+    display: flex;
+    gap: 32px;
+    justify-content: flex-start;
+    align-items: center;
+    align-self: flex-start;
+    margin-left: 188px;
+}
+
+.descriptionPanel {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 187px;
+    height: 187px;
+}
+
+.role {
+    margin: 0;
+    font-size: 32px;
+    line-height: 37.5px;
+    font-weight: 400;
 }
