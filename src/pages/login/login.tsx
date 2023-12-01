@@ -1,57 +1,69 @@
 import { Navigate } from "react-router-dom";
-import { useForm } from "../../hooks/use-form";
 import { Button } from "../../ui/button/button"
-import { Input, InputType } from "../../ui/input/input"
-import { FormEvent } from "react";
 import styles from './login.module.css';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { eyeIcon, formSchema } from "../../utils";
+import { useState } from "react";
+
+    interface IFormInput {
+        name: string;
+        email: string;
+        password: string;
+        confirm: string;
+      }
 
 export const Login = () => {
-    const {values, handleChange} = useForm({name: '', email: '', password: '', confirm: ''});
+    const { register, handleSubmit, reset, formState: { errors }} = useForm({ resolver: yupResolver(formSchema) });
+    const [passwordShow, setPasswordShow] = useState(false);
+    const [confirmShow, setConfirmShow] = useState(false);
+
+    const togglePasswordHide = () => {
+        setPasswordShow(!passwordShow);
+      };
+
+    const toggleConfirmHide = () => {
+        setConfirmShow(!confirmShow);
+      };
     const redirectLogin = () => {
         return <Navigate to='/' replace/>
     }
 
-    const onRegister = (e: SubmitEvent | FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = (data: IFormInput) => {
+        console.log(data);
+        reset();
         //поставить фейковые данные в сессию и сделать авторизацию
         redirectLogin();
     }
 
     return (
         <section className={styles.wrapper}>
-            <form className={styles.form} onSubmit={onRegister}>
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <ul className={styles.inputList}>Регистрация
-                    <Input 
-                    type={InputType.name}
-                    onChange={handleChange}
-                    name={'name'}
-                    value={values.name || ''}
-                    label={'Имя'}
-                    placeholder={'Артур'}/>
-                    <Input 
-                    type={InputType.email}
-                    name={'email'}
-                    onChange={handleChange}
-                    value={values.email || ''}
-                    label={'Электронная почта'}
-                    placeholder={'example@mail.ru'}/>
-                    <Input 
-                    type={InputType.password}
-                    name={'password'}
-                    onChange={handleChange}
-                    value={values.password || ''}
-                    label={'Пароль'}
-                    placeholder={''}/>
-                    <Input 
-                    type={InputType.password}
-                    name={'confirm'}
-                    onChange={handleChange}
-                    value={values.confirm || ''}
-                    label={'Подтвердите пароль'}
-                    placeholder={''}/>
+                    <label>Имя</label>
+                    <input {...register('name')} placeholder={'Артур'}/>
+                    {errors.name && <span>{errors.name.message}</span>}
+
+                    <label>Электронная почта</label>
+                    <input {...register('email')} placeholder={'example@mail.ru'}/>
+                    {errors.email && <span>{errors.email.message}</span>}
+
+                    <label>Пароль</label>
+                    <input {...register('password')} type={passwordShow ? "text" : "password"}/>
+                    <div onClick={togglePasswordHide}>
+                        <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
+                    </div>
+                    {errors.password && <span>{errors.password.message}</span>}
+
+                    <label>Подтвердите пароль</label>
+                    <input {...register('confirm')} type={confirmShow ? "text" : "password"}/>
+                    <div onClick={toggleConfirmHide}>
+                        <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
+                    </div>
+                    {errors.confirm && <span>{errors.confirm.message}</span>}
                 </ul>
-                <Button />
-            </form>
+                    <Button onClick={onSubmit}/>
+                </form>
         </section>
     )
 }

@@ -1,5 +1,5 @@
-export const Button = () => {
+export const Button = ({onClick}) => {
     return (
-        <button>Сохранить</button>
+        <button onSubmit={onClick}>Сохранить</button>
     )
 }
