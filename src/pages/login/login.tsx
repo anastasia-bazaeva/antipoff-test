@@ -4,9 +4,12 @@ import styles from './login.module.css';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { eyeIcon, formSchema } from "../../utils";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { useAppDispatch } from "../../services/store";
+import { setAuth } from "../../services/auth-store";
+import { useRegisterMutation } from "../../services/users-api";
 
-    interface IFormInput {
+export interface IFormInput {
         name: string;
         email: string;
         password: string;
@@ -17,6 +20,32 @@ export const Login = () => {
     const { register, handleSubmit, reset, formState: { errors }} = useForm({ resolver: yupResolver(formSchema) });
     const [passwordShow, setPasswordShow] = useState(false);
     const [confirmShow, setConfirmShow] = useState(false);
+    const [auth, { isLoading }] = useRegisterMutation();
+    const dispatch = useAppDispatch();
+
+    const redirectLogin = () => {
+        return <Navigate to='/' replace/>
+    }
+
+    const handleAdminLogin = async (data: IFormInput) => {
+        try {
+            // const user = await auth(data).unwrap(); Вместо этой строчки ниже моковые 
+            //данные существующего юзера для фейкового api
+          const user = await auth({
+            "email": "eve.holt@reqres.in",
+            "password": "pistol"
+        }).unwrap();
+          sessionStorage.setItem('auth_token', user.access_token);
+          dispatch(setAuth());
+          redirectLogin();
+        } catch (err) {
+          console.log({
+            status: err,
+            title: 'Error',
+            description: 'Ошибка при попытке регистрации',
+          });
+        }
+      };
 
     const togglePasswordHide = () => {
         setPasswordShow(!passwordShow);
@@ -25,45 +54,55 @@ export const Login = () => {
     const toggleConfirmHide = () => {
         setConfirmShow(!confirmShow);
       };
-    const redirectLogin = () => {
-        return <Navigate to='/' replace/>
-    }
 
-    const onSubmit = (data: IFormInput) => {
+    const onSubmit = (data: IFormInput | FormEvent<HTMLButtonElement>) => {
         console.log(data);
+        handleAdminLogin(data);
         reset();
-        //поставить фейковые данные в сессию и сделать авторизацию
-        redirectLogin();
     }
 
     return (
         <section className={styles.wrapper}>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            {isLoading ? <h1>Загрузка...</h1> 
+            :<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <ul className={styles.inputList}>Регистрация
-                    <label>Имя</label>
-                    <input {...register('name')} placeholder={'Артур'}/>
-                    {errors.name && <span>{errors.name.message}</span>}
+                    <li className={styles.inputElement}>
+                        <label>Имя</label>
+                        <input className={styles.inputField}
+                        {...register('name')} placeholder={'Артур'}/>
+                        {errors.name && <span>{errors.name.message}</span>}
+                    </li>
 
-                    <label>Электронная почта</label>
-                    <input {...register('email')} placeholder={'example@mail.ru'}/>
-                    {errors.email && <span>{errors.email.message}</span>}
+                    <li className={styles.inputElement}>
+                        <label>Электронная почта</label>
+                        <input className={styles.inputField}
+                        {...register('email')} placeholder={'example@mail.ru'}/>
+                        {errors.email && <span>{errors.email.message}</span>}
+                    </li>
 
-                    <label>Пароль</label>
-                    <input {...register('password')} type={passwordShow ? "text" : "password"}/>
-                    <div onClick={togglePasswordHide}>
-                        <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
-                    </div>
-                    {errors.password && <span>{errors.password.message}</span>}
+                    <li className={styles.inputElement}>
+                        <label>Пароль</label>
+                        <input className={styles.inputField}
+                        {...register('password')} type={passwordShow ? 'text' : 'password'}/>
+                        <div onClick={togglePasswordHide}>
+                            <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
+                        </div>
+                        {errors.password && <span>{errors.password.message}</span>}
+                    </li>
+                    
+                    <li className={styles.inputElement}>
+                        <label>Подтвердите пароль</label>
+                        <input className={styles.inputField}
+                        {...register('confirm')} type={confirmShow ? 'text' : 'password'}/>
+                        <div onClick={toggleConfirmHide}>
+                            <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
+                        </div>
+                        {errors.confirm && <span>{errors.confirm.message}</span>}
 
-                    <label>Подтвердите пароль</label>
-                    <input {...register('confirm')} type={confirmShow ? "text" : "password"}/>
-                    <div onClick={toggleConfirmHide}>
-                        <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
-                    </div>
-                    {errors.confirm && <span>{errors.confirm.message}</span>}
+                    </li>
                 </ul>
                     <Button onClick={onSubmit}/>
-                </form>
+                </form>}
         </section>
     )
 }
