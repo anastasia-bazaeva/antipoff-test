@@ -4,7 +4,7 @@ import styles from './login.module.css';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { eyeIcon, formSchema } from "../../utils";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch } from "../../services/store";
 import { setAuth } from "../../services/auth-store";
 import { useRegisterMutation } from "../../services/users-api";
@@ -14,7 +14,7 @@ export interface IFormInput {
         email: string;
         password: string;
         confirm: string;
-      }
+      }   
 
 export const Login = () => {
     const { register, handleSubmit, reset, formState: { errors }} = useForm({ resolver: yupResolver(formSchema) });
@@ -29,8 +29,9 @@ export const Login = () => {
 
     const handleAdminLogin = async (data: IFormInput) => {
         try {
+            console.log(data);
             // const user = await auth(data).unwrap(); Вместо этой строчки ниже моковые 
-            //данные юзера для фейкового api
+            //данные юзера для фейкового api. Также вызвала data в консоль, чтобы избежать ошибки TS
           const user = await auth({
             "email": "eve.holt@reqres.in",
             "password": "pistol"
@@ -55,7 +56,7 @@ export const Login = () => {
         setConfirmShow(!confirmShow);
       };
 
-    const onSubmit = (data: IFormInput | FormEvent<HTMLButtonElement>) => {
+    const onSubmit = (data: IFormInput) => {
         handleAdminLogin(data);
         reset();
     }
@@ -108,7 +109,7 @@ export const Login = () => {
 
                     </li>
                 </ul>
-                    <Button isLoading={isLoading} text='Зарегистрироваться' onClick={onSubmit}/>
+                    <Button isLoading={isLoading} text='Зарегистрироваться' type={'submit'}/>
                 </form>}
         </section>
     )
