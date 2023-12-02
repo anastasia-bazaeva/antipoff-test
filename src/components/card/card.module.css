@@ -27,6 +27,7 @@
     line-height: 23.44px;
     font-weight: 400;
     color: var(--colors-interface-black);
+    text-align: center;
 }
 
 .btnPanel {

@@ -82,3 +82,62 @@
     line-height: 37.5px;
     font-weight: 400;
 }
+
+.mobLink {
+    display: none;
+    width: 18px;
+    height: 18px;
+}
+
+.mobLink:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 950px) {
+    .title {
+        font-size: 36px;
+        line-height: 42.19px;
+        margin-top: 12px;
+    }
+    .text {
+        font-size: 16px;
+        line-height: 18.75px;
+        max-width: 343px;
+    }
+    .link {
+        display: none;
+    }
+    .mobLink {
+        display: block;
+        position: absolute;
+        top: -17px;
+        right: -57px;
+    }
+
+    .backLink {
+        top: -17px;
+        left: -67px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .wrapper {
+        align-items: center;
+    }
+    .userBar {
+        flex-direction: column-reverse;
+        align-items: center;
+        align-self: center;
+        gap: 16px;
+        margin: 0 0 32px;
+    }
+    .descriptionPanel {
+        text-align: center;
+    }
+    .role {
+        font-size: 20px;
+        line-height: 23.44px;
+    }
+
+}

@@ -1,11 +1,15 @@
-import { FormEvent } from "react"
+import { FormEvent } from "react";
+import styles from './button.module.css';
 
 interface ButtonProps {
+    text: string,
+    isLoading: boolean,
     onClick: (event: FormEvent<HTMLButtonElement>) => void
 }
 
-export const Button = ({onClick}:ButtonProps) => {
+export const Button = ({ isLoading, text, onClick }:ButtonProps) => {
+
     return (
-        <button onSubmit={onClick}>Сохранить</button>
+        <button className={styles.button} disabled={isLoading ?? false} onSubmit={onClick}>{text}</button>
     )
 }

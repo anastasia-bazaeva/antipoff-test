@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAppSelector } from "../../services/store";
 
 interface PrivateRoutesProps {
     privateRoutes: true,
@@ -12,14 +13,14 @@ interface UnauthorizedRoutesProps {
 type RouteGroupProps = PrivateRoutesProps | UnauthorizedRoutesProps;
 
 export const RoutesGroup = ({ privateRoutes, onlyUnauthorized }: RouteGroupProps) => {
-    const isauth = false;
+    const isAuth = useAppSelector((store) => store.auth.isAuth);
 
     if(onlyUnauthorized) {
-        return isauth ? <Navigate to="/" replace /> : <Outlet />;
+        return isAuth ? <Navigate to="/" replace /> : <Outlet />;
     }
 
     if(privateRoutes) {
-        return isauth ? <Outlet /> : <Navigate to="/auth" replace />;
+        return isAuth ? <Outlet /> : <Navigate to="/auth" replace />;
     }
 
     return <Outlet />;

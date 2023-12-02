@@ -27,8 +27,12 @@ export const User = () => {
                     инвестором других бизнес-проектов.</p>
             </article>
             <div className={styles.contactsBar}>
-                <Link className={styles.contact} to='/'><img className={styles.icon} src={phoneIcon} alt='иконка телефона'/>+7 (123) 456-78-90</Link>
-                <Link className={styles.contact} to='/'><img className={styles.icon} src={mailIcon} alt='иконка почтового конверта'/>{user.data.email}</Link>
+                <Link className={styles.contact} to='tel:+71234567890'>
+                    <img className={styles.icon} src={phoneIcon} alt='иконка телефона'/>+7 (123) 456-78-90
+                </Link>
+                <Link className={styles.contact} to={`mailto:${user.data.email}`}>
+                    <img className={styles.icon} src={mailIcon} alt='иконка почтового конверта'/>{user.data.email}
+                </Link>
             </div></>} 
         </section>
     )

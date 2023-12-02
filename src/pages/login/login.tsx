@@ -30,7 +30,7 @@ export const Login = () => {
     const handleAdminLogin = async (data: IFormInput) => {
         try {
             // const user = await auth(data).unwrap(); Вместо этой строчки ниже моковые 
-            //данные существующего юзера для фейкового api
+            //данные юзера для фейкового api
           const user = await auth({
             "email": "eve.holt@reqres.in",
             "password": "pistol"
@@ -56,7 +56,6 @@ export const Login = () => {
       };
 
     const onSubmit = (data: IFormInput | FormEvent<HTMLButtonElement>) => {
-        console.log(data);
         handleAdminLogin(data);
         reset();
     }
@@ -67,41 +66,49 @@ export const Login = () => {
             :<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <ul className={styles.inputList}>Регистрация
                     <li className={styles.inputElement}>
-                        <label>Имя</label>
-                        <input className={styles.inputField}
+                        <label className={styles.label}>
+                            Имя
+                        </label>
+                        <input className={!errors.name ? styles.inputField : `${styles.inputField} ${styles.invalidInput}`}
                         {...register('name')} placeholder={'Артур'}/>
-                        {errors.name && <span>{errors.name.message}</span>}
+                        {errors.name && <span className={styles.errorText}>{errors.name.message}</span>}
                     </li>
 
                     <li className={styles.inputElement}>
-                        <label>Электронная почта</label>
-                        <input className={styles.inputField}
+                        <label className={styles.label}>
+                            Электронная почта
+                        </label>
+                        <input className={!errors.email ? styles.inputField : `${styles.inputField} ${styles.invalidInput}`}
                         {...register('email')} placeholder={'example@mail.ru'}/>
-                        {errors.email && <span>{errors.email.message}</span>}
+                        {errors.email && <span className={styles.errorText}>{errors.email.message}</span>}
                     </li>
 
                     <li className={styles.inputElement}>
-                        <label>Пароль</label>
-                        <input className={styles.inputField}
-                        {...register('password')} type={passwordShow ? 'text' : 'password'}/>
+                        <label className={styles.label}>
+                            Пароль
+                        </label>
+                        <input className={!errors.password ? styles.inputField : `${styles.inputField} ${styles.invalidInput}`}
+                        {...register('password')} placeholder={'******'} type={passwordShow ? 'text' : 'password'}/>
                         <div onClick={togglePasswordHide}>
-                            <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
+                            <img className={styles.icon} src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
                         </div>
-                        {errors.password && <span>{errors.password.message}</span>}
+                        {errors.password && <span className={styles.errorText}>{errors.password.message}</span>}
                     </li>
                     
                     <li className={styles.inputElement}>
-                        <label>Подтвердите пароль</label>
-                        <input className={styles.inputField}
-                        {...register('confirm')} type={confirmShow ? 'text' : 'password'}/>
+                        <label className={styles.label}>
+                            Подтвердите пароль
+                        </label>
+                        <input className={!errors.confirm ? styles.inputField : `${styles.inputField} ${styles.invalidInput}`}
+                        {...register('confirm')} placeholder={'******'} type={confirmShow ? 'text' : 'password'}/>
                         <div onClick={toggleConfirmHide}>
-                            <img src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
+                            <img className={styles.icon} src={eyeIcon} alt='Иконка для отображения и скрытия пароля'/>
                         </div>
-                        {errors.confirm && <span>{errors.confirm.message}</span>}
+                        {errors.confirm && <span className={styles.errorText}>{errors.confirm.message}</span>}
 
                     </li>
                 </ul>
-                    <Button onClick={onSubmit}/>
+                    <Button isLoading={isLoading} text='Зарегистрироваться' onClick={onSubmit}/>
                 </form>}
         </section>
     )
