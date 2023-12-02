@@ -1,6 +1,6 @@
 # Приложение с карточками сотрудников, доступное по регистрации
 
-## [Ссылка на ДЕМО]('https://antipoff-test-aqgy.vercel.app/')
+## [Ссылка на ДЕМО](https://antipoff-test-aqgy.vercel.app/)
 
 **О проекте**
 
