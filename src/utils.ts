@@ -1,11 +1,11 @@
-import phone from '../public/phone.svg';
-import mail from '../public/mail.svg';
-import arrow from '../public/arrow.svg';
-import heart from '../public/heart.svg';
-import checkedHeart from '../public/darkheart.svg';
-import eye from '../public/Eye Off.svg';
-import exit from '../public/exit.svg';
-import back from '../public/back.svg';
+import phone from '/phone.svg';
+import mail from '/mail.svg';
+import arrow from '/arrow.svg';
+import heart from '/heart.svg';
+import checkedHeart from '/darkheart.svg';
+import eye from '/Eye Off.svg';
+import exit from '/exit.svg';
+import back from '/back.svg';
 import * as yup from "yup";
 
 export const phoneIcon = phone;
