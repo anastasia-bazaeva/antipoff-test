@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# Приложение с карточками сотрудников, доступное по регистрации
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##[Ссылка на ДЕМО]()
 
-Currently, two official plugins are available:
+**О проекте**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Этот проект - виртуальный кабинет для доступа к карточкам сотрудников.
+В нем есть несколько страниц:
+#### Регистрация
+Представляет собой онлайн-форму для регистрации на портале. Все поля обязательные, при первой попытке отправить форму с ошибками, начинают подсвечиваться все поля, в которых введены некорректные данные.
+#### Лента сотрудников
+На странице отображена лента всех доступных сотрудников. Информация приходит через API, если карточек больше 4 (настроила значение меньшее, чем в макете, т.к. с фейкового API приходит менее 8 объектов пользователей), доступна кнопка для отображения еще 4 карточек. Если карточки для отображения кончились, кнопка исчезает. 
+#### Личная карточка сотрудника
+Личная карточка сотрудника содержит текстовую информацию и контактные данные. При переходе на эту страницу меняется хедер приложения.
 
-## Expanding the ESLint configuration
+В проекте используются:
+- Typescript модули
+- React
+- React Router 6
+- React Hook Form
+- Vite
+- Тестовое API https://reqres.in/
+- Защищенные роуты
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
